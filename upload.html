@@ -35,24 +35,43 @@
          <div class="sub_title">Upload Rice Image Below</div>
       </div> 
       <div class="upload">
-        <script>
-            function upload(){
-                let data = document.getElementById("file").files[0];
-                let entry = document.getElementById("file").files[0];
-                console.log('upload',entry,data)
-                fetch('uploads/' + encodeURIComponent(entry.name), {method:'PUT',body:data});
-                alert('your file has been uploaded');
-             };
-            
-        </script>
-        
-       
-    
-        <input type="file" name="file" id="file">
-        <button onclick="upload()" name="submit" id="btn-clickon">Upload</button>
-        
- 
-    </div>
+        <form id="upload-form">
+          <input type="file" id="upload-input" name="upload-input">
+          <button type="submit" >Upload</button>
+      </form>
+      <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script>
+      <script>
+      // Initialize the Amazon Cognito credentials provider
+      AWS.config.region = 'REGION'; // replace with your region
+      AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+      IdentityPoolId: 'IDENTITY_POOL_ID', // replace with your identity pool id
+      });
+      // Initialize the S3 client
+      var s3 = new AWS.S3();
+      // Handle form submission
+      var form = document.getElementById('upload-form');
+      form.onsubmit = function(event) {
+      event.preventDefault();
+      // Get the file to upload
+      var file = document.getElementById('upload-input').files[0];
+      // Create a random key for the object
+      var key = 'images/' + Math.random().toString(36).substring(2);
+      // Upload the file to S3
+      s3.putObject({
+          Bucket: 'BUCKET_NAME', // replace with your bucket name
+          Key: key,
+          Body: file,
+          ACL: 'public-read'
+      }, function(error, data) {
+      if (error) {
+      console.error('Error uploading file: ', error);
+      } else {
+      console.log('Successfully uploaded file: ', data);
+      }
+      });
+      };
+  </script> 
+        </div>
     </div>
     <div class="copyright p-2 d-flex justify-content-center">
         <p>Copyright © 2022. DhruthZuci Technology Solutions. All rights reserved. </p>
