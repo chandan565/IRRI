@@ -42,9 +42,9 @@
       <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script>
       <script>
       // Initialize the Amazon Cognito credentials provider
-      AWS.config.region = 'REGION'; // replace with your region
+      AWS.config.region = 'us-east-1'; // Region
       AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-      IdentityPoolId: 'IDENTITY_POOL_ID', // replace with your identity pool id
+          IdentityPoolId: 'us-east-1:15c26262-0d01-45ce-a0ae-22c9015f5fab',
       });
       // Initialize the S3 client
       var s3 = new AWS.S3();
@@ -58,7 +58,7 @@
       var key = 'images/' + Math.random().toString(36).substring(2);
       // Upload the file to S3
       s3.putObject({
-          Bucket: 'BUCKET_NAME', // replace with your bucket name
+          Bucket: 'chandan-s3-irri', // replace with your bucket name
           Key: key,
           Body: file,
           ACL: 'public-read'
