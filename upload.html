@@ -11,7 +11,7 @@
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     
-    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <!-- <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script> -->
       <title>Home Page</title>   
    </head>
    <body>
@@ -58,7 +58,7 @@
       var key = 'images/' + Math.random().toString(36).substring(2);
       // Upload the file to S3
       s3.putObject({
-          Bucket: 'chandan-s3-irri', // replace with your bucket name
+          Bucket: 'chandan-irri-s3', // replace with your bucket name
           Key: key,
           Body: file,
           ACL: 'public-read'
