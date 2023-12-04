@@ -133,6 +133,47 @@ nav .menu{
   text-align: center;   
 
 }
+.grain-tiles {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  margin-bottom: 50px;
+  margin-top: 200px; 
+}
+
+.grain-tile {
+  cursor: pointer;
+  padding: 50px;
+  border: 1px solid #f5f5f5;
+  border-radius: 10px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.grain-tile:hover {
+  background-color: #d41f1f;
+}
+
+.upload-buttons {
+  text-align: center;
+}
+
+.input-file {
+  margin-bottom: 10px;
+}
+
+#upload-button {
+  background-color: #d2dbe6;
+  color: #352626;
+  border: none;
+  padding: 10px 3%;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#upload-button:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
 /* .center .btns{
   margin-top: 20px;
 }
