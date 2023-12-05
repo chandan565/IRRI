@@ -88,7 +88,7 @@
                                 popup.document.write(`<p>File name: ${fileName}</p>`);
                                 popup.document.write(`<p>File size: ${fileSizeDisplay}</p>`);
                                 popup.addEventListener('beforeunload', () => {
-                                    window.location.href = 'display-result.html';
+                                    window.location.href = `display-result.html?grainType=${grainType}`;
                                 });
                             }, 500);
                         }

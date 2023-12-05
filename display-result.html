@@ -24,7 +24,54 @@
     </style>
 </head>
 <body>
+    <script>
+        function refreshResults() {
+            location.reload();
+        }
+
+        // Function to get query parameters from the URL
+        function getQueryParam(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+    // Retrieve grainType from query parameters
+    const grainType = getQueryParam('grainType');
+
+    // Log all URL parameters to the console
+    console.log('All URL Parameters:', Array.from(new URLSearchParams(window.location.search).entries()));
+
+    // Log grainType to the console
+    if (grainType) {
+        console.log('Grain Type:', decodeURIComponent(grainType));
+    } else {
+        console.log('Grain Type not found in the URL');
+    }
+            fetch(`https://wz24bi69p3.execute-api.us-west-1.amazonaws.com/dev/rice-prediction-result?grainType=${grainType}`)
+                .then(response => response.json())
+                .then(data => {
+                    const resultTable = document.getElementById('result');
+                    data["body-json"].forEach(item => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${item.date}</td>
+                            <td>${item.category}</td>
+                            <td>${item.class}</td>
+                            <td><img width="30%" height="30%" src="${item.cdn_url}" alt="Grain Image"></td>
+                            <td>${item.score}</td>
+                            <td>${JSON.stringify(item.ranking)}</td>
+                        `;
+                        resultTable.appendChild(tr);
+                    });
+                })
+                .catch(error => console.error(error));
+        });
+
+    </script>
+
     <h1>Result Page</h1>
+    <p id="grainTypeStatus"></p>
     <table>
         <thead>
             <tr>
@@ -34,38 +81,11 @@
                 <th>Image</th>
                 <th>Score</th>
                 <th>Ranking</th>
-                <!-- <td><img width="100%" height="100%" src="https://irri-test-cali.s3.amazonaws.com/basmati (14991).jpg" /></td> -->
-
             </tr>
         </thead>
         <tbody id="result"></tbody>
     </table>
     <p><em>You can refresh to see the latest result in a minute.</em></p>
     <button onclick="refreshResults()">Refresh</button>
-    <script>
-      function refreshResults() {
-            location.reload();
-        }
-        // Use fetch to call your API Gateway URL with GET method
-        fetch('https://wz24bi69p3.execute-api.us-west-1.amazonaws.com/dev/rice-prediction-result')
-            .then(response => response.json())
-            .then(data => {
-                // Display the response data on the table
-                const resultTable = document.getElementById('result');
-                data["body-json"].forEach(item => {
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td>${item.date}</td>
-                        <td>${item.category}</td>
-                        <td>${item.class}</td>
-                        <td><img width="30% height="30% src="${item.cdn_url}"</td>
-                        <td>${item.score}</td>
-                        <td>${JSON.stringify(item.ranking)}</td>                    
-                    `;
-                    resultTable.appendChild(tr);
-                });
-            })
-            .catch(error => console.error(error));
-    </script>
 </body>
 </html>
