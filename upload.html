@@ -17,7 +17,6 @@
             </div>
             <ul>
                 <li><a href="index.html">Home</a></li>
-                <!-- <li><a href="#">Contact Us</a></li> -->
             </ul>
         </div>
     </nav>
@@ -54,6 +53,7 @@
                 form.addEventListener('submit', async (event) => {
                     event.preventDefault();
                     const grainType = grainTypeSelect.value;
+                    const userid = "chandan@gmail.com"; 
                     if (!grainType || !fileInput.files.length) {
                         alert('Please select both grain type and a file to upload');
                         return;
@@ -73,7 +73,8 @@
                         const response = await fetch(url, {
                             method: 'PUT',
                             headers: {
-                                'Content-Type': 'image/jpeg'
+                                'Content-Type': 'image/jpeg',
+                                'x-amz-meta-userid': userid  
                             },
                             body: file
                         });
@@ -88,7 +89,7 @@
                                 popup.document.write(`<p>File name: ${fileName}</p>`);
                                 popup.document.write(`<p>File size: ${fileSizeDisplay}</p>`);
                                 popup.addEventListener('beforeunload', () => {
-                                    window.location.href = `display-result.html?grainType=${grainType}`;
+                                    window.location.href = `display-result.html?grainType=${grainType}&userid=${userid}`;
                                 });
                             }, 500);
                         }

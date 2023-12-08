@@ -29,26 +29,31 @@
             location.reload();
         }
 
-        // Function to get query parameters from the URL
         function getQueryParam(name) {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(name);
         }
 
         document.addEventListener('DOMContentLoaded', function () {
-    // Retrieve grainType from query parameters
-    const grainType = getQueryParam('grainType');
+            const grainType = getQueryParam('grainType');
+            const userid = getQueryParam('userid');
 
-    // Log all URL parameters to the console
-    console.log('All URL Parameters:', Array.from(new URLSearchParams(window.location.search).entries()));
+            console.log('All URL Parameters:', Array.from(new URLSearchParams(window.location.search).entries()));
 
-    // Log grainType to the console
-    if (grainType) {
-        console.log('Grain Type:', decodeURIComponent(grainType));
-    } else {
-        console.log('Grain Type not found in the URL');
-    }
-            fetch(`https://wz24bi69p3.execute-api.us-west-1.amazonaws.com/dev/rice-prediction-result?grainType=${grainType}`)
+
+            if (grainType) {
+                console.log('Grain Type:', decodeURIComponent(grainType));
+            } else {
+                console.log('Grain Type not found in the URL');
+            }
+
+            if (userid) {
+                console.log('User ID:', decodeURIComponent(userid));
+            } else {
+                console.log('User ID not found in the URL');
+            }
+
+            fetch(`https://wz24bi69p3.execute-api.us-west-1.amazonaws.com/dev/rice-prediction-result?grainType=${grainType}&userid=${userid}`)
                 .then(response => response.json())
                 .then(data => {
                     const resultTable = document.getElementById('result');
